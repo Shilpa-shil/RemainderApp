@@ -10,7 +10,7 @@ useNewUrlParser:true
 const User=mongoose.model('User',{
     name: String,
     userid:String,
-    Password:Number,
+    password:Number,
     event:[]
 })
 
