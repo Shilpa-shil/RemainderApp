@@ -1,5 +1,7 @@
 //import express
 const express = require('express')
+
+
 //import jsonwebtoken
 const jwt = require('jsonwebtoken')
 
@@ -17,11 +19,12 @@ app.use(cors({
     origin:"http://localhost:4200"
 }))
 
-//parse json data
+//parse json data. Use Express
 app.use(express.json())
 
 //token verify
 const jwtMiddleware = (req,res,next)=>{
+  
     //to fetch token
     try{
         token = req.headers['reminder-token']
@@ -33,7 +36,7 @@ const jwtMiddleware = (req,res,next)=>{
         res.status(401).json({
             status:false,
             statusCode:401,
-            message:'Please login001'
+            message:'Please login'
         })
     }
 }
@@ -70,6 +73,13 @@ app.post('/getEvent',jwtMiddleware,(req,res)=>{
     })
 })
 
+//removeEvent api
+app.post('/removeEvent',jwtMiddleware,(req,res)=>{
+    dataservice.removeEvent(req,req.k)
+    .then(result=>{
+        res.status(result.statusCode).json(result)
+    })
+})
 
 //set port number
 app.listen(3000,()=>{

@@ -59,7 +59,7 @@ const login = (userid,password)=>{
         else{
             return{
                 status: false,
-                message: "Invalid account number or password",
+                message: "Invalid userid or password",
                 statusCode:401
             }
         }
@@ -116,11 +116,31 @@ const getEvent = (req,currentUserid)=>{
     })
 }
 
+const removeEvent = (req,k)=>{
+    let currentUserid = req.currentUserid
+
+    return db.User.findOne({
+        userid : currentUserid
+    }).then(user=>{
+        if(user){
+            console.log(user);
+            user.event.splice(k,1)
+        }
+        user.save()
+        return{
+            status: true,
+            message: "event is deleted",
+            statusCode:200
+        }
+    })
+}
+
 
 
 module.exports={
     register,
     login,
-    addEvent,
-    getEvent
+    addEvent,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+    getEvent,
+    removeEvent
 }
